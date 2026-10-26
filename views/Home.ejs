@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Home Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/css/home.css">
+        <style>
+            body  {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            URL Shortener Dashboard
+          </header>
+        <%  if ( locals.id ) { %>
+            <p> URL GENERATED: http://localhost:1234/url/<%= id %></p>
+         <% } %>
+        <div>
+            <form method="post" action="/url/"> 
+                <label> Enter Your Original URL</label>
+                <input type="text" name="url" placeholder="Enter your url"/>
+                <button type: "submit">Generate</button>
+            </form>
+        </div>
+        <div>
+            <% if  (locals.urls) { %>
+                <table>
+                    <thead>
+                        <th> sr.no.</th>
+                        <th> short Id</th>
+                        <th> redirect URL</th>
+                        <th> Clicks</th>
+                        
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url, index) => { %>
+                            <tr>
+                            <td><%= index + 1 %></td> 
+                            <td><%= url.shortId %></td>
+                            <td><%= url.redirectURL %></td>
+                            <td><%= url.visitedHistory.length %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                    
+                </table>
+            <% } %>
+    </div>
+
+        
+        <script src="" async defer></script>
+
+        
+    <% /* ADMIN ONLY: users list (shown only when users is sent from backend) */ %>
+    <% if (typeof users !== "undefined") { %>
+        <h2>Users (Admin)</h2>
+        <ul>
+          <% users.forEach(user => { %>
+            <li><%= user.email %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </body>
+</html>
